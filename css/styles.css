@@ -1,0 +1,616 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ---------- FONDOS ---------- */
+/* Fondos generales */
+.portada,
+.carta-page {
+    min-height: 100vh;
+    background: linear-gradient(#f6d6de, #e68fa8); /* un rosa suave más oscuro */
+    overflow-x: hidden;
+}
+
+
+/* ---------- PORTADA ---------- */
+.center {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.center h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.center p {
+    opacity: 0.7;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 14px 36px;
+    border-radius: 30px;
+    background: #e63946;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* ---------- SOBRE ---------- */
+.envelope-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    min-height: 250px;
+    perspective: 1000px;
+    z-index: 10;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    margin: 0 auto;
+}
+
+.envelope-front {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.2rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    z-index: 3;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.envelope:hover .envelope-front {
+    opacity: 1;
+}
+
+/* CUERPO DEL SOBRE */
+.envelope-body {
+    width: 100%;
+    height: 200px;
+    background: #e3a8b0;
+    border: 2px solid #b84f5f;
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+/* TAPA */
+.envelope-top {
+    width: 100%;
+    height: 100px;
+    background: #d97b8a;
+    border: 2px solid #b84f5f;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform-origin: top;
+    transition: transform 0.8s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Al abrir */
+.envelope.open {
+    transform: translateY(-30px);
+}
+
+.envelope.open .envelope-top {
+    transform: rotateX(180deg);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.envelope.open .envelope-front {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope.open {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* CARTA */
+/* CARTA - escritorio */
+.paper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    opacity: 0;
+    z-index: 0;
+    transition: all 0.8s ease 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    max-height: 80vh;
+    overflow-y: auto;
+    pointer-events: none;
+    margin: 0; /* Remove the margin-top */
+}
+
+.paper.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* Center vertically and horizontally */
+    pointer-events: auto;
+}
+
+/* Keep mobile styles as they are */
+@media (max-width: 768px) {
+    .paper {
+        top: 0;
+        transform: translateX(-50%) scale(0.9);
+        margin-top: 20px;
+    }
+    
+    .paper.show {
+        transform: translateX(-50%) translateY(100px) scale(1);
+    }
+}
+
+.paper-content {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #333;
+    white-space: pre-line;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Continue Button Styles */
+.continue-btn {
+    background: linear-gradient(45deg, #e74c3c, #e67e22);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.continue-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.continue-btn:active {
+    transform: translateY(1px);
+}
+
+/* Add animation for the button */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.continue-btn {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .envelope-container {
+        width: 90%;
+        max-width: 320px;
+    }
+    
+    .envelope {
+        height: 180px;
+    }
+    
+    .envelope-body {
+        height: 180px;
+    }
+    
+    .envelope-top {
+        height: 90px;
+    }
+    
+    .paper {
+        padding: 1.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .paper.show {
+        transform: translateX(-50%) translateY(80px) scale(1);
+    }
+}
+
+/* Animation for the letter content */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.paper.show .paper-content {
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+    .paper {
+        position: relative;          /* importante: relativo en móvil */
+        top: auto;
+        left: auto;
+        transform: none;             /* eliminamos translate */
+        margin: 20px auto 0;         /* centrado horizontal */
+        width: 90%;                  /* ocupa casi todo el ancho */
+        max-width: 360px;            /* límite ancho */
+        min-height: auto;
+    }
+
+    /* Imagen debajo de la carta */
+    .side-image {
+        margin-top: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .arrow, .arrow-text {
+        display: none;               /* ocultamos flechas */
+    }
+}
+
+
+
+
+/* ---------- ESTADOS ---------- */
+.envelope.open .envelope-top {
+    transform: rotateX(180deg);
+}
+
+.envelope.open {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.paper.show {
+    transform: translateY(-140px) scale(1.15);
+}
+
+/* ---------- CORAZONES ---------- */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    color: #e63946;
+    opacity: 0.6;
+    animation: float 8s linear infinite;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-110vh);
+    }
+}
+
+/* Imagen al lado izquierdo de la carta */
+/* Imagen al lado de la carta en escritorio */
+.side-image {
+    position: fixed;
+    top: 50%;
+    left: 40px;           
+    transform: translateY(-50%);
+    display: none;        
+    text-align: center;
+    z-index: 3;           /* debajo de la carta */
+}
+
+.side-image img {
+    width: 300px;          
+    max-width: 80vw;       
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+/* Flechas animadas suaves apuntando a la imagen */
+.arrow {
+    width: 50px;
+    height: 4px;
+    background: #e63946;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: rotate(0deg);
+    animation: arrowPulse 1s infinite alternate;
+}
+
+#arrow1 {
+    transform: rotate(20deg);
+    top: 30%;
+}
+
+#arrow2 {
+    transform: rotate(-20deg);
+    top: 60%;
+}
+
+@keyframes arrowPulse {
+    0% { transform: translateX(0) rotate(20deg); opacity: 0.6; }
+    50% { transform: translateX(10px) rotate(20deg); opacity: 1; }
+    100% { transform: translateX(0) rotate(20deg); opacity: 0.6; }
+}
+
+/* Texto junto a las flechas */
+.arrow-text {
+    position: absolute;
+    top: 50%;
+    left: 140%;          
+    transform: translateY(-50%);
+    color: #e63946;
+    font-weight: 600;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Mostrar la imagen al abrir la carta */
+.side-image.show {
+    display: block;
+}
+
+/* ----------- MENSAJE TOCAR PANTALLA ----------- */
+#tap-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+#tap-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ----------- ESTILOS DE LA PÁGINA DE INICIO ----------- */
+.portada {
+    background: linear-gradient(135deg, #ffcce0 0%, #ff8fb1 50%, #f76b8a 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.center {
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    color: #e74c3c;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-family: 'Montserrat', sans-serif;
+    color: #555;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hearts {
+    margin: 1.5rem 0;
+}
+
+.hearts .heart {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.hearts .heart:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.hearts .heart:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(45deg, #e74c3c, #e67e22);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(231, 76, 60, 0.4);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* ----------- CORAZONES FLOTANTES ----------- */
+.heart {
+    position: fixed;
+    font-size: 1.5rem;
+    top: -10vh;
+    transform: translateY(0);
+    animation: fall 3s linear forwards;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* ----------- RESPONSIVE: móviles ----------- */
+@media (max-width: 768px) {
+    .side-image {
+        position: relative;     /* importante para que quede debajo de la carta */
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 20px auto 0;
+        display: block;         
+        z-index: 1;             /* debajo de la carta */
+    }
+
+    .side-image img {
+        width: 90%;             /* ocupa más espacio en móviles */
+        max-width: 320px;
+    }
+
+    .arrow, .arrow-text {
+        display: none;          /* ocultamos flechas en móvil */
+    }
+}
+
+/*slides  */
+.slideshow-page {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #f7c8d2;   /* fondo suave rosa */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#slideshow {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#slideshow img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+#slideshow img.show {
+    opacity: 1;
+}
+
+
+#back-button-container {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    width: 100%;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #e4789c, #ff85a2);
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+    cursor: pointer;
+    border: none;
+}
+
+.back-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+}
