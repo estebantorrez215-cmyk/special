@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Memories</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(180deg, #f8e1e7, #fdeff4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        .music-choice {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .choice-btn {
+            padding: 12px 26px;
+            font-size: 16px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(45deg, #ff9aa2, #ffb7c5);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .choice-btn.active {
+            background: linear-gradient(45deg, #ff6b81, #ff9aa2);
+        }
+
+        .start-btn {
+            padding: 14px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b81, #ff9aa2);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .carousel {
+            width: 100%;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            background: #fdeff4;
+        }
+
+       .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; 
+        object-position: center;
+        transition: opacity 1s ease;
+        background: #fdeff4; 
+    }
+    </style>
+</head>
+<body>
+
+<!-- Audios -->
+<audio id="musicMe" loop>
+    <source src="yo.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="musicOriginal" loop>
+    <source src="WhoKnows.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+    <!-- Elección de música -->
+    <div class="music-choice">
+        <button id="meBtn" class="choice-btn">Me</button>
+        <button id="originalBtn" class="choice-btn">Original</button>
+    </div>
+
+    <!-- Start -->
+    <button id="startBtn" class="start-btn">
+        Start
+    </button>
+
+    <!-- Carrusel -->
+    <div id="carousel" class="carousel">
+        <img id="carouselImg" src="" alt="memory">
+    </div>
+    <button id="backBtn" class="start-btn" style="margin-top: 20px; background: linear-gradient(45deg, #6b6bff, #8e8eff);">
+        Back
+    </button>
+</div>
+
+<script>
+    const images = [
+        "https://i.pinimg.com/736x/d8/ca/aa/d8caaa7cd77356268573194f05821e60.jpg",
+        "https://i.pinimg.com/736x/ae/48/27/ae482773e5d26623e8309de584d5c967.jpg",
+        "https://i.pinimg.com/736x/76/ae/cc/76aecc81d28a148d1bacd26b48070b87.jpg",
+        "https://i.pinimg.com/736x/10/23/95/10239521af6974ab1ba86ed3c179b199.jpg",
+        "https://i.pinimg.com/736x/62/e4/1d/62e41d108b28acd7cdd927b64127b012.jpg",
+        "https://i.pinimg.com/736x/0b/c4/91/0bc4916aeff6131138f1399c7ae73d7f.jpg",
+        "https://i.pinimg.com/736x/f2/60/46/f2604659bb28dbb307d9ca33c275fa88.jpg",
+        "https://i.pinimg.com/736x/fd/b4/1b/fdb41b9985defa09ae2159ade38f0dc8.jpg",
+        "https://i.pinimg.com/736x/42/1b/7a/421b7a0d48f767bdd00529efeeafe5f9.jpg",
+        "https://i.pinimg.com/1200x/21/72/3a/21723a5433316570e1cae3d5cfddb217.jpg",
+        "https://i.pinimg.com/1200x/04/57/bb/0457bb3c0849f1cc314ec4e2ff4a68bb.jpg",
+        "https://i.pinimg.com/736x/03/9a/d2/039ad20c75ce0d5700c1673916c073c1.jpg",
+        "https://i.pinimg.com/736x/d0/80/32/d08032d7d75e879c1577de02c430b732.jpg",
+        "https://i.pinimg.com/1200x/76/af/21/76af21919133efda9521964cbbfb6791.jpg",
+        "https://i.pinimg.com/736x/bc/93/d4/bc93d49e808f3fb263794dcf50ac422d.jpg",
+        "https://i.pinimg.com/736x/fb/5a/b0/fb5ab0080142db68f87799b61572feac.jpg",
+        "https://i.pinimg.com/736x/3f/b8/7e/3fb87e5521e17b4f0bb2893e0cae4beb.jpg",
+        "https://i.pinimg.com/736x/4b/b7/28/4bb728604b9a41be40387f38f67de7ae.jpg",
+        "https://i.pinimg.com/736x/f3/63/cd/f363cd452ab6c5c3f0703d0fa04725f5.jpg",
+        "https://i.pinimg.com/1200x/6b/af/99/6baf99f9fe3fb79830f6e45f38c38c1a.jpg",
+        "https://i.pinimg.com/1200x/e3/57/36/e357366ff9db9f60b96d748fc2dace77.jpg",
+        "https://i.pinimg.com/736x/a7/d2/6a/a7d26a56ae0cf2a6416d6308e0756ff0.jpg",
+        "https://i.pinimg.com/736x/de/21/7f/de217fcd78ffe9933b6c94e93221aa4f.jpg",
+        "https://i.pinimg.com/736x/5a/8b/df/5a8bdf5836b61ee1dfd5047ca38ed0dc.jpg",
+        "https://i.pinimg.com/736x/07/83/6c/07836cd7f6597b5c35c8b145c6f121f2.jpg",
+        "https://i.pinimg.com/736x/a2/84/54/a28454e12a0d31ce0cb2c683c775ad9c.jpg",
+        "https://i.pinimg.com/736x/11/5e/99/115e9936e556dfcfaeccecd17f3fa22c.jpg",
+        "https://i.pinimg.com/736x/ea/f8/c4/eaf8c4b4a93441fd283dad28630be80e.jpg",
+        "https://i.pinimg.com/1200x/04/4c/3f/044c3f9dfce0b1e5072452f1eef7a6dd.jpg",
+        "https://i.pinimg.com/736x/5c/65/e7/5c65e74a08f2cb8ebcb53f4b51d22fa2.jpg",
+        "https://i.pinimg.com/1200x/07/10/45/071045022787a12927e17b9e87623fa8.jpg",
+        "https://i.pinimg.com/1200x/58/cc/fb/58ccfbb6088cd4ff4c3ad69c83bdc8de.jpg",
+        "https://i.pinimg.com/1200x/fb/d9/fa/fbd9fa2809c9b321a060a6e2a61c2704.jpg",
+        "https://i.pinimg.com/736x/cc/01/ce/cc01ce2b036b1c8660ca194deddf2fd6.jpg",
+        "https://i.pinimg.com/736x/73/da/9f/73da9ff79fd9fa19603d15163f65ebbf.jpg",
+        "https://i.pinimg.com/736x/6c/92/24/6c92243736321b41d5a390c600e26ecd.jpg",
+        "https://i.pinimg.com/1200x/9c/36/87/9c368785aed4406dbc3d0b6c86e177d7.jpg",
+
+    ];
+
+     const meBtn = document.getElementById("meBtn");
+    const originalBtn = document.getElementById("originalBtn");
+    const startBtn = document.getElementById("startBtn");
+    const carousel = document.getElementById("carousel");
+    const img = document.getElementById("carouselImg");
+
+    const musicMe = document.getElementById("musicMe");
+    const musicOriginal = document.getElementById("musicOriginal");
+
+    let chosenMusic = null;
+    let index = 0;
+    let started = false;
+
+    function stopAllMusic() {
+        musicMe.pause();
+        musicOriginal.pause();
+    }
+
+    meBtn.addEventListener("click", () => {
+        stopAllMusic();
+        chosenMusic = musicMe;
+        musicMe.play().catch(() => {});
+        meBtn.classList.add("active");
+        originalBtn.classList.remove("active");
+    });
+
+    originalBtn.addEventListener("click", () => {
+        stopAllMusic();
+        chosenMusic = musicOriginal;
+        musicOriginal.play().catch(() => {});
+        originalBtn.classList.add("active");
+        meBtn.classList.remove("active");
+    });
+
+    function startCarousel() {
+        img.src = images[index];
+
+        setInterval(() => {
+            img.style.opacity = 0;
+
+            setTimeout(() => {
+                index = (index + 1) % images.length;
+                img.src = images[index];
+                img.style.opacity = 1;
+            }, 500);
+
+        }, 2000);
+    }
+
+    startBtn.addEventListener("click", () => {
+        if (!chosenMusic) {
+            alert("Choose a song first ♡");
+            return;
+        }
+
+        if (!started) {
+            started = true;
+            startBtn.style.display = "none";
+            carousel.style.display = "block";
+            startCarousel();
+        }
+    });
+    const backBtn = document.getElementById("backBtn");
+backBtn.addEventListener("click", () => {
+    window.location.href = "sanvalentin.html";
+});
+</script>
+
+</body>
+</html>

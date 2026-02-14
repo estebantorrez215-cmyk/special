@@ -614,3 +614,15 @@ h1 {
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
 }
+
+/* san valentin */
+.buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.btn-no {
+    background: #444;
+}
+

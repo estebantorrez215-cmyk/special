@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For You</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-no {
+            background: #444;
+        }
+
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+
+<body class="portada">
+
+<div class="center" id="screen">
+    <h1>( ˶ˆᗜˆ˵ )</h1>
+    <p class="subtitle">
+        I prepared something special for you  
+        <br>(,,> ᴗ <,,)
+    </p>
+
+    <button class="btn btn-love" onclick="start()">Start</button>
+</div>
+
+<script>
+let step = 0;
+
+function start() {
+    const screen = document.getElementById("screen");
+    step++;
+
+    if (step === 1) {
+        screen.innerHTML = `
+            <h1>(˶˃ ᵕ ˂˶)</h1>
+            <p class="subtitle">
+                Before we begin  
+                <br>Are you ready?
+            </p>
+            <button class="btn btn-love" onclick="start()">Yes ( ˘ ³˘)</button>
+        `;
+    }
+
+    else if (step === 2) {
+        screen.innerHTML = `
+            <h1>(≧◡≦)</h1>
+            <p class="subtitle">
+                Good choice  
+                <br>This is important
+            </p>
+            <button class="btn btn-love" onclick="start()">Continue</button>
+        `;
+    }
+
+    else if (step === 3) {
+        screen.innerHTML = `
+            <h1>(╥﹏╥)</h1>
+            <p class="subtitle">
+                If you say no  
+                <br>I will look like this
+            </p>
+            <button class="btn btn-love" onclick="start()">Don't cry</button>
+        `;
+    }
+
+    else if (step === 4) {
+        screen.innerHTML = `
+            <h1>( ˶ˆᗜˆ˵ )</h1>
+            <p class="subtitle">
+                Okay okay  
+                <br>Serious question now
+            </p>
+            <button class="btn btn-love" onclick="start()">I'm listening</button>
+        `;
+    }
+
+    else if (step === 5) {
+        screen.innerHTML = `
+            <h1>♡(˃͈ ˂͈ )</h1>
+            <p class="subtitle">
+                Will you be my Valentine?
+            </p>
+
+            <div class="buttons">
+                <button class="btn btn-love" onclick="demo()">Yes</button>
+                <button class="btn btn-no" onclick="run(this)">No</button>
+            </div>
+        `;
+    }
+}
+
+function run(btn) {
+    btn.classList.add("shake");
+
+    setTimeout(() => {
+        btn.classList.remove("shake");
+
+        btn.style.position = "fixed";
+
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+    }, 200);
+}
+
+function demo() {
+    const screen = document.getElementById("screen");
+    screen.innerHTML = `
+        <h1>( ˶ˆᗜˆ˵ )</h1>
+        <p class="subtitle">
+            Wait  
+            <br>That was just the demo
+        </p>
+
+        <button class="btn btn-love" onclick="location.href='cajita.html'">Okay</button>
+    `;
+}
+
+function real() {
+    const screen = document.getElementById("screen");
+    screen.innerHTML = `
+        <h1>♡(˃͈ ˂͈ )</h1>
+        <p class="subtitle">
+            Now for real  
+            <br>Will you be my Valentine?
+        </p>
+
+        <div class="buttons">
+            <button class="btn btn-love" onclick="yes()">Yes</button>
+        </div>
+    `;
+}
+
+function yes() {
+    const screen = document.getElementById("screen");
+    screen.innerHTML = `
+        <h1>૮꒰ ˶• ༝ •˶꒱ა</h1>
+        <p class="subtitle">
+            I knew it  
+            <br>You make me very happy
+            <br><br>♡‧₊˚✧ ૮ ˶ᵔ ᵕ ᵔ˶ ა ✧˚₊‧♡
+        </p>
+    `;
+}
+</script>
+
+</body>
+</html>

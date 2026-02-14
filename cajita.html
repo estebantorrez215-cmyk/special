@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For You</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-no {
+            background: #444;
+        }
+
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .love-img {
+            width: 220px;
+            max-width: 80%;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body class="portada">
+
+<div class="center" id="screen">
+    <img 
+        src="https://i.pinimg.com/736x/6a/8f/20/6a8f2038e56e86fd81fe8577f55e359f.jpg"
+        class="love-img"
+        alt="Love"
+    >
+
+    <h1>( ˶ˆᗜˆ˵ )</h1>
+    <p class="subtitle">
+        Will you be my Valentine?
+        <br>(,,> ᴗ <,,)
+    </p>
+
+    <div class="buttons">
+        <button class="btn btn-love" onclick="step1()">Yes</button>
+        <button class="btn btn-no" onclick="run(this)">No</button>
+    </div>
+</div>
+
+<script>
+const screen = document.getElementById("screen");
+
+function run(btn) {
+    btn.classList.add("shake");
+
+    setTimeout(() => {
+        btn.classList.remove("shake");
+        btn.style.position = "fixed";
+
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        btn.style.left = Math.random() * maxX + "px";
+        btn.style.top = Math.random() * maxY + "px";
+    }, 200);
+}
+
+function step1() {
+    screen.innerHTML = `
+        <h1>(˶ᵔ ᵕ ᵔ˶)</h1>
+        <p class="subtitle">
+            Continue then?
+        </p>
+        <button class="btn btn-love" onclick="step2()">Continue</button>
+    `;
+}
+
+function step2() {
+    screen.innerHTML = `
+        <h1>(≧◡≦)</h1>
+        <p class="subtitle">
+            Are you sure?
+        </p>
+        <button class="btn btn-love" onclick="step3()">Yes</button>
+    `;
+}
+
+function step3() {
+    screen.innerHTML = `
+        <h1>(⸝⸝> ᴗ <⸝⸝)</h1>
+        <p class="subtitle">
+            Really really sure?
+        </p>
+        <button class="btn btn-love" onclick="finalStep()">Absolutely</button>
+    `;
+}
+
+function finalStep() {
+    screen.innerHTML = `
+        <h1>( ˶ᵔ ᵕ ᵔ˶ )</h1>
+        <p class="subtitle">
+            Okay then.
+            <br>One last thing.
+        </p>
+        <button class="btn btn-love" onclick="location.href='valentin.html'">
+            Continue
+        </button>
+    `;
+}
+
+</script>
+
+</body>
+</html>

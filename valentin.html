@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For You</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #fff0f3, #ffe6eb);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        .letter-page {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter-box {
+            width: 90%;
+            max-width: 600px;
+            max-height: 75vh;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow-y: auto;
+        }
+
+        .letter-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            line-height: 1.7;
+            color: #444;
+            white-space: pre-wrap;
+        }
+
+        /* Scroll bonito */
+        .letter-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .letter-box::-webkit-scrollbar-thumb {
+            background: #ffb6c1;
+            border-radius: 10px;
+        }
+
+        .continue-btn {
+            display: none;
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 36px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .continue-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="letter-page">
+
+    <!-- Música -->
+    <audio id="music" loop>
+        <source src="sleep.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="letter-box">
+        <div id="letter" class="letter-text"></div>
+    </div>
+
+    <button id="continueBtn" class="continue-btn" onclick="goNext()">
+        Continue →
+    </button>
+
+    <script>
+        const text = `
+Well well, our second Valentine's Day together??  
+Wow, what is this??
+
+The first time was in person,  
+the second one is at a distance,  
+let's make the third one together again ε(´｡•᎑•\`)っ 💕
+
+Ay ay ay, mi amorcito  
+you have no idea how much I love you.
+
+I miss you so much,  
+I only think about you from sunrise to sunset,  
+I love you like an eight sleeping — that is, infinite (´꒳\`)♡
+
+I hope we can build something very beautiful together  
+and see each other soon,  
+if you save money of course (˶ᵔ ᵕ ᵔ˶)
+
+There is so much more I want to say  
+but I don't know how to express myself in text.
+But
+"I love that nothing in my life is complete until I share it with you"
+
+
+I love you so much, my little princess.
+
+🌺🌺           🌺🌺
+🌺🌺🌺🌺🌺🌺🌺
+🌺🌺🌺🌺🌺🌺🌺
+   🌺🌺🌺🌺🌺🌺
+ Λ 🌺🌺🌺🌺🌺
+( ˘ ᵕ ˘ 🌺🌺🌺
+ ヽ  つ＼     ／
+    UU   / 🎀 \\`;
+
+        const letterEl = document.getElementById("letter");
+        const continueBtn = document.getElementById("continueBtn");
+        const music = document.getElementById("music");
+
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                letterEl.innerHTML += text.charAt(i);
+                i++;
+                letterEl.parentElement.scrollTop = letterEl.parentElement.scrollHeight;
+                setTimeout(typeWriter, 35);
+            } else {
+                continueBtn.style.display = "block";
+            }
+        }
+
+        typeWriter();
+
+        // Música (autoplay seguro)
+        document.addEventListener("click", () => {
+            music.play().catch(() => {});
+        }, { once: true });
+
+        function goNext() {
+            window.location.href = "fotitos.html";
+        }
+    </script>
+
+</body>
+</html>
